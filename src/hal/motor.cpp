@@ -664,7 +664,7 @@ static void init_motor(BLDCMotor *motor,BLDCDriver3PWM *driver,GenericSensor *se
     //连接motor对象与传感器对象
     motor->linkSensor(sensor);
     // PWM 频率 [Hz]
-    driver->pwm_frequency = 50000;
+    driver->pwm_frequency = 60000;
     //供电电压设置 [V]
     driver->voltage_power_supply = 8;
     driver->init();
