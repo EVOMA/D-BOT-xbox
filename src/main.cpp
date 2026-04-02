@@ -52,7 +52,7 @@ void push_handler(ButtonEvent* btn, int event)
 void setup() {
     nvs_init();
     HAL::Init();
-    
+
     dbot_init();
     // HWSerial.begin(115200);
     log_i("init App...");

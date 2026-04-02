@@ -128,6 +128,14 @@ void bmi270_update(void)
     g_imu_data.angle_z = angleGyroZ;
 
     preInterval = millis();
+
+    // log_i("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
+    //           g_imu_data.angle_x, g_imu_data.angle_y, g_imu_data.angle_z,
+    //           g_imu_data.gyro_x, g_imu_data.gyro_y, g_imu_data.gyro_z, interval);
+
+    // log_i("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
+    // imu.data.accelX, imu.data.accelY, imu.data.accelZ,
+    // imu.data.gyroX, imu.data.gyroY, imu.data.gyroZ);
 }
 
 void
@@ -273,11 +281,18 @@ void HAL::imu_init(void)
     }
 }
 
-
-
 float HAL::imu_get_pitch(void)
 {
     return g_imu_data.angle_y; /* 0-180  -180 - 0 */
+}
+
+float HAL::imu_get_accelZ(void)
+{
+    imu.getSensorData();
+
+    // imu.data.accelX    -1, 1
+    // (imu.data.accelX + 1) * 90   0, 180
+    return imu.data.accelZ * 100.0; 
 }
 
 float HAL::imu_get_yaw(void)

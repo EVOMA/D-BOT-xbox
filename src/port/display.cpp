@@ -33,6 +33,7 @@ void display_init(void)
     lv_port_indev_init();
     lv_fs_fatfs_init();
     // Update display in parallel thread.
+    log_i("Display init");
     xTaskCreatePinnedToCore(
         TaskLvglUpdate,
         "LvglThread",
@@ -41,5 +42,6 @@ void display_init(void)
         configMAX_PRIORITIES - 1,
         &handleTaskLvgl,
         LVGL_RUNNING_CORE);
+    log_i("Display init success");
 
 }

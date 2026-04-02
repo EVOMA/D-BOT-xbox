@@ -141,6 +141,11 @@ static void StatusBar_Update(lv_timer_t* timer)
     actStatusBar->Pull("Power", &power, sizeof(power));
     lv_label_set_text_fmt(ui.battery.label, "%d", power.usage);
 
+    // Log打印电量信息
+    log_i("[Battery] Voltage: %.2fV, Usage: %d%%, Charging: %s",
+          power.voltage / 1000.0f, power.usage, power.isCharging ? "YES" : "NO");
+
+  
     bool Is_BattCharging = power.isCharging;
     lv_obj_t* contBatt = ui.battery.objUsage;
     static bool Is_BattChargingAnimActive = false;
@@ -273,8 +278,8 @@ static lv_obj_t* StatusBar_Create(lv_obj_t* par)
 
     StatusBar::SetStyle(StatusBar::STYLE_TRANSP);
 
-    // lv_timer_t* timer = lv_timer_create(StatusBar_Update, 1000, nullptr);
-    // lv_timer_ready(timer);
+    lv_timer_t* timer = lv_timer_create(StatusBar_Update, 1000, nullptr);
+    lv_timer_ready(timer);
 
     return ui.cont;
 }

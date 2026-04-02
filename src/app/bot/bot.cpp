@@ -9,7 +9,7 @@
 #include "bot.h"
 #include "hal/hal.h"
 
-int g_bot_ctrl_type = BOT_CONTROL_TYPE_AI;
+int g_bot_ctrl_type = BOT_CONTROL_TYPE_JOYSTICKS;
 
 #define WHEEL_DIAMETER 6
 #define WHEEL_CIRCUMFERENCE (WHEEL_DIAMETER * M_PI)

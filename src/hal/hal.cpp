@@ -64,6 +64,7 @@ void HAL::Update()
 
     system_led_run(currentMillis);
     audio_update();
+    power_update();  // 更新电量信息
     // imu_update();
     // HAL::motor_task(NULL);
 }

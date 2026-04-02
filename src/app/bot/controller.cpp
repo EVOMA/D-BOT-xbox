@@ -117,7 +117,6 @@ static long _map(long x, long in_min, long in_max, long out_min, long out_max) {
     return (delta * rise) / run + out_min;
 }
 
-
 static void controller_set_motor_status(void)
 {
     int speed = 0, steering = 0;
@@ -129,10 +128,12 @@ static void controller_set_motor_status(void)
     
     ble_parser = ble_ctrl.get_status();
 
-    speed = _map(ble_parser->joyLVert, 0, 65535, -MOTOR_MAX_SPEED, MOTOR_MAX_SPEED);
+    speed = _map(-ble_parser->trigLT + ble_parser->trigRT, -1023, 1023, -MOTOR_MAX_SPEED, MOTOR_MAX_SPEED);
+
+    // speed = _map(ble_parser->joyLVert, 0, 65535, -MOTOR_MAX_SPEED, MOTOR_MAX_SPEED);
     steering = _map(ble_parser->joyLHori, 0, 65535, -BOT_MAX_STEERING, BOT_MAX_STEERING);
-    // log_i("joyLVert: %d, joyRHori: %d, speed: %d, steering: %d.\n", 
-    //         ble_parser->joyLVert, ble_parser->joyRHori, speed, steering);
+    // log_i("joyLVert: %d, joyRHori: %d, trigLT: %d, trigRT: %d, speed: %d, steering: %d.\n", 
+    //         ble_parser->joyLVert, ble_parser->joyRHori, ble_parser->trigLT, ble_parser->trigRT, speed, steering);
 
     // if (speed == 0 && last_speed == 0 && steering == 0 && last_steering == 0) {
     //     // no change

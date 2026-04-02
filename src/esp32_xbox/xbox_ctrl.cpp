@@ -68,6 +68,8 @@ void _update_status()
     bleParser.joyRVert = xboxController.xboxNotif.joyRVert;
     bleParser.joyLHori = xboxController.xboxNotif.joyLHori;
     bleParser.joyRHori = xboxController.xboxNotif.joyRHori;
+    bleParser.trigRT = xboxController.xboxNotif.trigRT;  // 0-1023
+    bleParser.trigLT = xboxController.xboxNotif.trigLT;
 }
 
 
@@ -90,7 +92,7 @@ void BLECtrl::loop(void)
     }
     else
     {
-        log_i("not connected");
+        // log_i("not connected");
         // if (xboxController.getCountFailedConnection() > 2)
         // {
         //     ESP.restart();

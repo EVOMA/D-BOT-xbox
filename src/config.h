@@ -9,7 +9,7 @@
 #define TFT_RST 9
 #define CONFIG_TFT_BLK_CHANNEL     0
 
-#define MO0_1 GPIO_NUM_4
+#define MO0_1 GPIO_NUM_3
 #define MO0_2 GPIO_NUM_5
 #define MO0_3 GPIO_NUM_6
 #define MT6701_SS_0 GPIO_NUM_42
@@ -30,6 +30,7 @@
 #define PUSH_BUTTON_PIN 5
 #define BATTERY_OFF_PIN 7
 #define ON_OFF_PIN      18
+#define BATTERY_ADC_PIN GPIO_NUM_4   // ADC1_CH4  (使用GPIO4作为ADC引脚)
 #define LVGL_RUNNING_CORE   1            
 #define ESP32_RUNNING_CORE  1
 #define MOTOR_RUNNING_CORE  0          

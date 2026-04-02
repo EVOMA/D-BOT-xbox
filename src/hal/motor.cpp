@@ -565,17 +565,18 @@ static void act_bot_status_publish(int running_mode)
 
 static int motor_task_mode_update(int &mode, bool &is_changed)
 {
-    int mpu_pitch = (int)(HAL::imu_get_pitch());
+    int mpu_pitch = (int)(HAL::imu_get_accelZ());  // G * 100
+
     static int last_mode = BOT_RUNNING_MODE;
     static unsigned long last_change_time = 0;
     static bool is_timing = false;
     int mode_tmp = BOT_RUNNING_MODE;
    
-    if (abs(mpu_pitch) > 120) {
+    if (mpu_pitch < -38) {
         mode_tmp = BOT_RUNNING_XKNOB;
     }
 
-    if (abs(mpu_pitch) < 60) {
+    if (mpu_pitch > 38) {
         mode_tmp = BOT_RUNNING_BALANCE;
     }
 
@@ -587,13 +588,20 @@ static int motor_task_mode_update(int &mode, bool &is_changed)
         is_timing = false;
     }
 
-    if (is_timing && millis() - last_change_time >= 1000) {
+    if (is_timing && millis() - last_change_time >= 800) {
         mode = mode_tmp; // 更新模式
         is_changed = true; // 标记状态变化
         log_e("pitch: %d mode from %d change to %d", mpu_pitch, last_mode, mode);
         last_mode = mode; // 更新上一次模式
     }
-    
+
+    // mode = BOT_RUNNING_XKNOB;
+
+    // if (frame_cnt % 10 == 0) 
+    // {
+    //     log_i("fid[%d] mode:%d last_time: %d, millis: %d, delta: %d, imu: pitch: %d, yaw: %d, gyro_z: %d", 
+    //             frame_cnt, mode, last_change_time, millis(), millis() - last_change_time, mpu_pitch, mpu_yaw, mpu_gyro_z);
+    // }
     return 0;
 }
 

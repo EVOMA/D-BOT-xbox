@@ -13,19 +13,19 @@ WiFiManager wm;
 
 // 参数名、标签、默认值、最大长度
 static WiFiManagerParameter game_ctrlr_addr("game_ctrlr_addr", 
-                    "手柄蓝牙地址", "04:0A:11:11:90:10", 18);
+                    "Controller Bluetooth Address: ", "04:0A:11:11:90:10", 18);
 
-static WiFiManagerParameter mqtt_host("mqtt_host", "MQTT 服务器地址", "192.168.1.12", 32);
-static WiFiManagerParameter mqtt_port("mqtt_port", "MQTT 端口号", "1883", 8);
+static WiFiManagerParameter mqtt_host("mqtt_host", "MQTT Server Address", "192.168.1.12", 32);
+static WiFiManagerParameter mqtt_port("mqtt_port", "MQTT Port", "1883", 8);
 static WiFiManagerParameter mqtt_topic_prefix("mqtt_topic_prefix", 
-                            "MQTT 消息前缀", "dingmos", 32);
+                            "MQTT Message Prefix", "dingmos", 32);
 
 void config_mode_cb(WiFiManager *wifi_manager)
 {
-    log_i("进入网络配置模式...");
+    log_i("Entering network configuration mode...");
     log_i("%s", WiFi.softAPIP().toString().c_str());
 
-    log_i("请连接 WiFi %s 进行配置", wifi_manager->getConfigPortalSSID().c_str());
+    log_i("Please connect to WiFi %s for configuration", wifi_manager->getConfigPortalSSID().c_str());
     HAL::log_system(SYSTEM_INFO, "connect WiFi: \n%s \naccess: %s", 
                     wifi_manager->getConfigPortalSSID().c_str(),
                     WiFi.softAPIP().toString().c_str());
@@ -50,7 +50,7 @@ void save_config_cb()
     save_mqtt_config();
 
     HAL::log_system(SYSTEM_WARN, "system reboot...");
-    log_i("配置已保存，准备重启");
+    log_i("Configuration saved, preparing to restart");
     ESP.restart();
 }
 
@@ -69,11 +69,11 @@ int HAL::network_init(void)
     wm.setConfigPortalTimeout(300);
 
     if (!wm.autoConnect(apName.c_str())) {
-        log_e("配置超时，重启设备");
+        log_e("Configuration timeout, restarting device");
         ESP.restart();
     }
 
-    log_i("网络连接成功！");
+    log_i("Network connection successful!");
     return 0;
 }
 

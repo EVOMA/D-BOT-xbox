@@ -97,6 +97,13 @@ namespace HAL
 
     void power_init(void);
     void power_off(void);
+    void power_update(void);  // 更新电量信息
+    bool battery_is_charging(void);
+
+    // 全局函数别名
+    float hal_read_battery_voltage(void);
+    int hal_read_battery_percentage(void);
+    bool hal_battery_is_charging(void);
 
     bool is_encoder_enabled(void);
     void encoder_disable(void);
@@ -126,6 +133,7 @@ namespace HAL
     void  imu_update(void *pvParameters);
     float imu_get_abs_yaw(void);
     float imu_get_pitch(void);
+    float imu_get_accelZ(void);
     float imu_get_yaw(void);
     float imu_get_gyro_z(void);
 
